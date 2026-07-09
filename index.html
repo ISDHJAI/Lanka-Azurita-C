@@ -1,4 +1,78 @@
-mn; justify-content:space-between;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Azurita C — Privada Lanka | CASTDIM | Sueños Hechos Propiedad</title>
+<meta name="description" content="Azurita C en Privada Lanka. 3 niveles, 81 m² de terreno, 99.83 m² de construcción. Sala, comedor, cocina, jardín y cochera en planta baja; dos recámaras en planta alta; vestidor y estancia en el roof.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#c1272d;
+    --red-deep:#9c1f24;
+    --blue:#1568b3;
+    --blue-deep:#0f4d87;
+    --gray-dark:#767571;
+    --gray-mid:#b7b6b2;
+    --bg:#f6f6f4;
+    --white:#ffffff;
+    --ink:#211f1e;
+    --ink-soft:#5c5b57;
+    --line:#e5e4e0;
+    --radius:18px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Montserrat', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+
+  .wrap{max-width:520px; margin:0 auto; position:relative; background:var(--bg);}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .eyebrow{
+    font-size:11.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gray-dark); display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .eyebrow::before{
+    content:""; width:16px; height:2px; background:var(--red); display:inline-block;
+  }
+  .section{padding:56px 24px;}
+  .section-title{
+    font-size:26px; font-weight:800; letter-spacing:-.01em; line-height:1.15; color:var(--ink);
+  }
+  .section-sub{
+    font-size:14px; color:var(--ink-soft); font-weight:400; line-height:1.6; margin-top:10px;
+  }
+
+  .divider{
+    display:flex; align-items:flex-end; justify-content:center; gap:6px; padding:38px 0 10px;
+  }
+  .divider i{
+    width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent;
+    opacity:.35; transform:translateY(10px); transition:transform .7s var(--ease), opacity .7s var(--ease);
+  }
+  .divider i:nth-child(1){border-bottom:12px solid var(--red);}
+  .divider i:nth-child(2){border-bottom:16px solid var(--gray-mid);}
+  .divider i:nth-child(3){border-bottom:12px solid var(--blue);}
+  .divider.in i{opacity:1; transform:translateY(0);}
+  .divider.in i:nth-child(2){transition-delay:.08s;}
+  .divider.in i:nth-child(3){transition-delay:.16s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; height:100svh; min-height:640px; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:space-between;
   }
   .hero-img{
     position:absolute; inset:0; width:100%; height:112%; object-fit:cover;
@@ -399,4 +473,3 @@ mn; justify-content:space-between;
 </script>
 </body>
 </html>
-
