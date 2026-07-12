@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Azurita C — Privada Lanka | CASTDIM | Sueños Hechos Propiedad</title>
+<meta name="description" content="Azurita C en Privada Lanka. 3 niveles, 81 m² de terreno, 99.83 m² de construcción. Sala, comedor, cocina, jardín y cochera en planta baja; dos recámaras en planta alta; vestidor y estancia en el roof.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#c1272d;
+    --red-deep:#9c1f24;
+    --blue:#1568b3;
+    --blue-deep:#0f4d87;
+    --gray-dark:#767571;
+    --gray-mid:#b7b6b2;
+    --bg:#f6f6f4;
+    --white:#ffffff;
+    --ink:#211f1e;
+    --ink-soft:#5c5b57;
+    --line:#e5e4e0;
+    --radius:18px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Montserrat', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+
+  .wrap{max-width:520px; margin:0 auto; position:relative; background:var(--bg);}
+
+  .reveal{
+    opacity:0; transform:translateY(28px); filter:blur(6px);
+    transition:opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);
+  }
+  .reveal.in{opacity:1; transform:translateY(0); filter:blur(0);}
+
+  /* stagger: los hijos entran uno tras otro */
+  .stagger > *{
+    opacity:0; transform:translateY(22px) scale(.97); filter:blur(5px);
+    transition:opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease);
+  }
+  .stagger.in > *{opacity:1; transform:translateY(0) scale(1); filter:blur(0);}
+  .stagger.in > *:nth-child(1){transition-delay:.05s;}
+  .stagger.in > *:nth-child(2){transition-delay:.13s;}
+  .stagger.in > *:nth-child(3){transition-delay:.21s;}
+  .stagger.in > *:nth-child(4){transition-delay:.29s;}
+  .stagger.in > *:nth-child(5){transition-delay:.37s;}
+  .stagger.in > *:nth-child(6){transition-delay:.45s;}
+  .stagger.in > *:nth-child(7){transition-delay:.53s;}
+  .stagger.in > *:nth-child(8){transition-delay:.61s;}
+  .stagger.in > *:nth-child(9){transition-delay:.69s;}
+
+  /* barra de progreso de scroll */
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--red) 0%, var(--blue) 100%);
+    z-index:98; transition:width .1s linear;
+  }
+  .eyebrow{
+    font-size:11.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gray-dark); display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .eyebrow::before{
+    content:""; width:16px; height:2px; background:var(--red); display:inline-block;
+  }
+  .section{padding:56px 24px;}
+  .section-title{
+    font-size:26px; font-weight:800; letter-spacing:-.01em; line-height:1.15; color:var(--ink);
+  }
+  .section-sub{
+    font-size:14px; color:var(--ink-soft); font-weight:400; line-height:1.6; margin-top:10px;
+  }
+
+  .divider{
+    display:flex; align-items:flex-end; justify-content:center; gap:6px; padding:38px 0 10px;
+  }
+  .divider i{
+    width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent;
+    opacity:.35; transform:translateY(10px); transition:transform .7s var(--ease), opacity .7s var(--ease);
+  }
+  .divider i:nth-child(1){border-bottom:12px solid var(--red);}
+  .divider i:nth-child(2){border-bottom:16px solid var(--gray-mid);}
+  .divider i:nth-child(3){border-bottom:12px solid var(--blue);}
+  .divider.in i{opacity:1; transform:translateY(0);}
+  .divider.in i:nth-child(2){transition-delay:.08s;}
+  .divider.in i:nth-child(3){transition-delay:.16s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; height:100svh; min-height:640px; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .hero-parallax{position:absolute; inset:0; will-change:transform;}
+  .hero-img{
+    position:absolute; inset:0; width:100%; height:112%; object-fit:cover;
+    transform:scale(1.08) translateY(0); animation:heroZoom 9s var(--ease) forwards;
+  }
+  @keyframes heroZoom{ from{transform:scale(1.14) translateY(0);} to{transform:scale(1.02) translateY(-2%);} }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,19,17,.55) 0%, rgba(20,19,17,.12) 30%, rgba(20,19,17,.35) 62%, rgba(15,14,13,.92) 100%);
+  }
+  .hero-top{
+    position:relative; z-index:2; display:flex; justify-content:center; padding-top:28px;
+    opacity:0; animation:fadeDown 1s var(--ease) .3s forwards;
+  }
+  @keyframes fadeDown{from{opacity:0; transform:translateY(-14px);} to{opacity:1; transform:translateY(0);}}
+  .hero-top img{height:64px;}
+
+  .hero-bottom{position:relative; z-index:2; padding:0 26px 34px; color:#fff;}
+  .hero-tagline{
+    height:20px; overflow:hidden; margin-bottom:14px;
+    opacity:0; animation:fadeUp .9s var(--ease) .5s forwards;
+  }
+  @keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  .hero-tagline ul{list-style:none;}
+  .hero-tagline li{
+    height:20px; font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#e8a4a7;
+  }
+  .tick{animation:tick 7s steps(1) infinite;}
+  @keyframes tick{
+    0%,22%{transform:translateY(0);} 25%,47%{transform:translateY(-20px);}
+    50%,72%{transform:translateY(-40px);} 75%,97%{transform:translateY(-60px);} 100%{transform:translateY(0);}
+  }
+  .hero-title{
+    font-size:44px; font-weight:900; line-height:1; letter-spacing:-.02em; text-transform:uppercase;
+    opacity:0; animation:fadeUp 1s var(--ease) .65s forwards;
+  }
+  .hero-title span{color:var(--red); display:block; font-size:15px; font-weight:600; letter-spacing:.28em; margin-top:10px; text-transform:uppercase;}
+
+  .scroll-cue{
+    position:absolute; z-index:2; bottom:14px; left:50%; transform:translateX(-50%);
+    width:22px; height:34px; border:1.5px solid rgba(255,255,255,.5); border-radius:20px;
+  }
+  .scroll-cue::after{
+    content:""; position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    width:4px; height:6px; background:var(--red); border-radius:2px; animation:cue 1.8s ease-in-out infinite;
+  }
+  @keyframes cue{0%{opacity:1; top:6px;} 60%{opacity:0; top:18px;} 61%{opacity:0; top:6px;} 100%{opacity:1; top:6px;}}
+
+  /* ---------- INTRO ---------- */
+  .intro-card{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; margin-top:22px; box-shadow:0 18px 40px -24px rgba(30,29,26,.2);
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .intro-card .dot{
+    width:10px; height:10px; border-radius:50%; background:var(--red); margin-top:6px; flex:none;
+  }
+  .intro-card p{font-size:13px; color:var(--ink-soft); line-height:1.7;}
+
+  /* ---------- PRICE ---------- */
+  .price-card{
+    background:linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+    border-radius:var(--radius); padding:24px 22px; margin-top:20px; text-align:center;
+    box-shadow:0 18px 40px -20px rgba(156,31,36,.45); color:#fff;
+    position:relative; overflow:hidden;
+  }
+  .price-card::after{
+    content:""; position:absolute; top:0; left:-80%; width:50%; height:100%;
+    background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.28) 50%, transparent 100%);
+    transform:skewX(-20deg); animation:sweep 4s var(--ease) infinite;
+  }
+  @keyframes sweep{0%{left:-80%;} 55%,100%{left:130%;}}
+  .price-card .plbl{font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; opacity:.85;}
+  .price-card .pval{font-size:32px; font-weight:900; letter-spacing:-.01em; margin-top:6px; font-variant-numeric:tabular-nums;}
+
+  /* ---------- MAP ---------- */
+  .map-card{
+    border-radius:var(--radius); overflow:hidden; margin-top:20px; border:1px solid var(--line);
+    box-shadow:0 18px 40px -24px rgba(30,29,26,.2); background:var(--white);
+  }
+  .map-card iframe{width:100%; height:260px; border:0; display:block;}
+  .map-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:16px; font-size:13px; font-weight:700; color:var(--ink); text-decoration:none;
+    border-top:1px solid var(--line);
+  }
+  .map-btn span{color:var(--red);}
+
+  /* ---------- STATS ---------- */
+  .stats-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;
+  }
+  .stat-card{
+    background:var(--white); border:1px solid var(--line); border-radius:14px;
+    padding:18px; text-align:center; box-shadow:0 18px 40px -24px rgba(30,29,26,.2);
+  }
+  .stat-card .num{font-size:24px; font-weight:800; color:var(--red);}
+  .stat-card .lbl{font-size:11px; color:var(--ink-soft); margin-top:4px; letter-spacing:.04em;}
+
+  /* ---------- DISTRIBUTION ---------- */
+  .plans-list{margin-top:26px; display:flex; flex-direction:column; gap:22px;}
+  .plan-card{
+    background:var(--white); border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
+    box-shadow:0 18px 40px -22px rgba(30,29,26,.25);
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .plan-card:hover{transform:translateY(-4px); box-shadow:0 24px 50px -22px rgba(30,29,26,.32);}
+  .plan-head{
+    display:flex; align-items:center; justify-content:space-between; padding:16px 18px 0;
+  }
+  .plan-head h3{font-size:15px; font-weight:700;}
+  .plan-head span{
+    font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--red); background:#f8dddd;
+    padding:5px 10px; border-radius:20px; text-transform:uppercase;
+  }
+  .plan-card figure{padding:10px 6px 16px; cursor:zoom-in; overflow:hidden; margin:0;}
+  .plan-card figure img{transition:transform .6s var(--ease);}
+  .plan-card:hover figure img{transform:scale(1.03);}
+  .plan-soon{
+    display:flex; align-items:center; justify-content:center; aspect-ratio:4/5;
+    border:1.5px dashed var(--gray-mid); border-radius:12px; margin:0 8px;
+    font-size:11px; color:var(--gray-dark); font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  }
+  .plan-card ul{
+    list-style:none; padding:0 18px 18px; display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .plan-card li{
+    font-size:11px; color:var(--ink-soft); background:var(--bg); border:1px solid var(--line);
+    padding:6px 10px; border-radius:20px; font-weight:500;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-list{display:flex; flex-direction:column; margin-top:22px;}
+  .room-block{padding:24px 0; border-bottom:1px solid var(--line);}
+  .room-block:first-child{padding-top:0;}
+  .room-block:last-child{border-bottom:none; padding-bottom:0;}
+  .room-head{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .room-num{
+    width:26px; height:26px; border-radius:50%; background:var(--red); color:#fff;
+    font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .room-block[data-cat="pa"] .room-num{background:var(--blue);}
+  .room-block[data-cat="roof"] .room-num{background:var(--ink);}
+  .room-head h3{font-size:15px; font-weight:700; color:var(--ink); letter-spacing:.01em;}
+  .room-photos{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .g-card.empty{
+    grid-column:1/-1; cursor:default; display:flex; align-items:center; justify-content:center;
+    border:1.5px dashed var(--gray-mid); aspect-ratio:16/6; background:var(--white); padding:16px;
+  }
+  .g-card.empty .soon{
+    font-size:12px; color:var(--gray-dark); font-weight:600; letter-spacing:.04em;
+    text-align:center; line-height:1.6;
+  }
+  .g-card.empty .soon a{color:var(--red); font-weight:700; text-decoration:underline;}
+
+  .tabs{
+    display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-top:20px; scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:0 0 auto; font-size:12px; font-weight:600; padding:10px 16px; border-radius:30px;
+    background:var(--white); border:1px solid var(--line); color:var(--ink-soft); white-space:nowrap;
+    transition:all .25s var(--ease); font-family:'Montserrat', sans-serif; cursor:pointer;
+  }
+  .tab.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  .gallery-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;
+  }
+  .g-card{
+    position:relative; border-radius:14px; overflow:hidden; aspect-ratio:1/1.05;
+    background:linear-gradient(150deg,#efeeea,#e2e0da);
+    display:flex; align-items:flex-end; cursor:zoom-in;
+  }
+  .g-card.wide{grid-column:span 2; aspect-ratio:16/10;}
+  .g-card img{
+    width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+    transition:transform .7s var(--ease);
+  }
+  .g-card:hover img, .g-card:active img{transform:scale(1.08);}
+  .g-card{transition:box-shadow .4s var(--ease);}
+  .g-card:hover{box-shadow:0 20px 44px -20px rgba(30,29,26,.35);}
+  .g-card .tag{
+    position:relative; z-index:2; width:100%; padding:12px; display:flex; align-items:center; gap:8px;
+    background:linear-gradient(0deg, rgba(20,19,17,.62), transparent);
+  }
+  .g-card .tag em{
+    font-style:normal; width:22px; height:22px; border-radius:50%; background:var(--red);
+    color:#fff; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .g-card.blue .tag em{background:var(--blue);}
+  .g-card .tag b{color:#fff; font-size:12.5px; font-weight:700;}
+
+  /* ---------- FINANCING ---------- */
+  .fin-card{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 22px; margin-top:20px; text-align:center;
+    box-shadow:0 18px 40px -24px rgba(30,29,26,.2);
+  }
+  .fin-card p{font-size:13px; color:var(--ink-soft); line-height:1.6;}
+  .fin-badges{
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:20px;
+  }
+  .fin-badges span{
+    font-size:11.5px; font-weight:700; color:var(--ink); background:var(--bg);
+    border:1px solid var(--line); padding:8px 14px; border-radius:20px;
+  }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta{
+    background:var(--ink); color:#fff; text-align:center; padding:60px 26px 46px; position:relative; overflow:hidden;
+  }
+  .cta::before{
+    content:""; position:absolute; top:-40px; right:-30px; width:180px; height:180px;
+    background:radial-gradient(circle, rgba(193,39,45,.22), transparent 70%);
+  }
+  .cta::after{
+    content:""; position:absolute; bottom:-50px; left:-30px; width:180px; height:180px;
+    background:radial-gradient(circle, rgba(21,104,179,.22), transparent 70%);
+  }
+  .cta h2{font-size:24px; font-weight:800; line-height:1.2; position:relative; z-index:1;}
+  .cta p{font-size:13px; color:var(--gray-mid); margin-top:12px; line-height:1.6; position:relative; z-index:1;}
+  .cta-btn{
+    display:inline-block; margin-top:24px; background:var(--red); color:#fff; font-weight:700;
+    font-size:13px; letter-spacing:.04em; padding:15px 32px; border-radius:30px; text-decoration:none;
+    position:relative; z-index:1; transition:transform .25s var(--ease);
+  }
+  .cta-btn:active{transform:scale(.96);}
+  .footer-logo{margin-top:38px; opacity:.95; position:relative; z-index:1;}
+  .footer-logo img{height:20px; margin:0 auto; filter:brightness(0) invert(1);}
+  .footer-tag{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-mid); margin-top:10px;}
+
+  /* ---------- BOTÓN AGENDAR (reutilizable) ---------- */
+  .btn-agendar-wrap{
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    margin-top:32px; text-align:center;
+  }
+  .btn-agendar-wrap p{font-size:12.5px; color:var(--ink-soft); font-weight:500; max-width:340px;}
+  .btn-agendar{
+    display:inline-flex; align-items:center; gap:8px; background:var(--red); color:#fff;
+    font-weight:700; font-size:13px; letter-spacing:.04em; padding:14px 30px; border-radius:30px;
+    text-decoration:none; box-shadow:0 16px 32px -16px rgba(193,39,45,.6);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .btn-agendar:hover{transform:translateY(-3px); box-shadow:0 22px 40px -14px rgba(193,39,45,.65);}
+  .btn-agendar:active{transform:scale(.96);}
+  .btn-agendar svg{width:15px; height:15px; fill:#fff;}
+
+  /* ---------- WHATSAPP FLOTANTE ---------- */
+  .wa-float{
+    position:fixed; right:18px; bottom:18px; z-index:90;
+    width:56px; height:56px; border-radius:50%; background:#25d366;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px -8px rgba(37,211,102,.55);
+    opacity:0; transform:translateY(80px) scale(.6); pointer-events:none;
+    transition:opacity .5s var(--ease), transform .5s var(--ease);
+  }
+  .wa-float.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
+  .wa-float svg{width:28px; height:28px; fill:#fff; position:relative; z-index:2;}
+  .wa-float::before, .wa-float::after{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    border:2px solid rgba(37,211,102,.55);
+  }
+  .wa-float.show::before{animation:waPulse 2.2s ease-out infinite;}
+  .wa-float.show::after{animation:waPulse 2.2s ease-out 1.1s infinite;}
+  @keyframes waPulse{0%{transform:scale(1); opacity:1;} 100%{transform:scale(1.8); opacity:0;}}
+  .wa-float:active{transform:scale(.92);}
+
+  /* ---------- DESKTOP ADAPTATION ---------- */
+  @media (min-width:860px){
+    .wrap{max-width:920px;}
+    .hero{min-height:720px;}
+    .hero-bottom{padding:0 52px 46px;}
+    .hero-title{font-size:64px;}
+    .hero-tagline li{font-size:13px;}
+    .section{padding:70px 52px;}
+    .stats-grid{grid-template-columns:repeat(4,1fr);}
+    .plans-list{flex-direction:row; align-items:flex-start;}
+    .plan-card{flex:1;}
+    .room-photos{grid-template-columns:repeat(3,1fr);}
+    .fin-badges span{font-size:12.5px;}
+    .map-card iframe{height:380px;}
+  }
+  @media (min-width:1200px){
+    .wrap{max-width:1080px;}
+    .room-photos{grid-template-columns:repeat(4,1fr);}
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(15,14,13,.94); z-index:99; display:none;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .lightbox.show{display:flex; animation:fadeIn .25s ease;}
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+  .lightbox img{max-height:88vh; border-radius:10px; animation:lbZoom .35s var(--ease);}
+  @keyframes lbZoom{from{transform:scale(.9); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .lightbox span{
+    position:absolute; top:24px; right:24px; color:#fff; font-size:26px; font-weight:300;
+  }
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="wrap">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero-parallax" id="heroParallax">
+      <img src="images/fachada.jpg" alt="Fachada Modelo Azurita C" class="hero-img">
+    </div>
+    <div class="hero-top"><img src="images/logo-lanka.png" alt="Lanka Privada"></div>
+    <div class="hero-bottom">
+      <div class="hero-tagline">
+        <ul class="tick">
+          <li>Sueños Hechos Propiedad</li>
+          <li>Diseño premium, San Luis Potosí</li>
+          <li>Tu próximo hogar te espera</li>
+          <li>Sueños Hechos Propiedad</li>
+        </ul>
+      </div>
+      <h1 class="hero-title">Azurita C<span>Privada Lanka · CASTDIM</span></h1>
+    </div>
+    <div class="scroll-cue"></div>
+  </section>
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="section" style="padding-top:34px;">
+    <div class="reveal">
+      <div class="eyebrow">Modelo Azurita C</div>
+      <h2 class="section-title">Un hogar de tres niveles, pensado para crecer con la familia</h2>
+      <p class="section-sub">Azurita C forma parte de Privada Lanka, uno de los desarrollos de CASTDIM en San Luis Potosí. Su distribución vertical aprovecha cada nivel: vida social en planta baja, descanso en planta alta y un roof versátil para el uso que la familia decida darle.</p>
+    </div>
+    <div class="intro-card reveal">
+      <div class="dot"></div>
+      <p>Sala, comedor, cocina, jardín y cochera en planta baja; dos recámaras en planta alta; vestidor, baño completo y estancia en el roof — ideal como home office, cuarto de huéspedes o zona de entretenimiento.</p>
+    </div>
+    <div class="price-card reveal">
+      <div class="plbl">Precio desde</div>
+      <div class="pval">$<span class="count" data-target="1430000" data-format="money">0</span></div>
+    </div>
+    <div class="stats-grid reveal stagger">
+      <div class="stat-card">
+        <div class="num"><span class="count" data-target="81">0</span> m²</div>
+        <div class="lbl">Terreno</div>
+      </div>
+      <div class="stat-card">
+        <div class="num"><span class="count" data-target="99.83" data-decimals="2">0</span> m²</div>
+        <div class="lbl">Construcción</div>
+      </div>
+      <div class="stat-card">
+        <div class="num"><span class="count" data-target="3">0</span></div>
+        <div class="lbl">Niveles</div>
+      </div>
+      <div class="stat-card">
+        <div class="num"><span class="count" data-target="2">0</span>+</div>
+        <div class="lbl">Recámaras</div>
+      </div>
+    </div>
+    <div class="btn-agendar-wrap reveal">
+      <p>¿Te gustó lo que viste hasta ahora?</p>
+      <a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20agendar%20una%20cita" class="btn-agendar">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.33C8.53 21.5 10.24 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.51 0-2.93-.4-4.16-1.11l-.3-.17-3.01.79.8-2.94-.19-.31A7.94 7.94 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Agendar cita
+      </a>
+    </div>
+  </section>
+
+  <div class="divider reveal"><i></i><i></i><i></i></div>
+
+  <!-- ===================== DISTRIBUCIÓN ===================== -->
+  <section class="section" style="padding-top:6px;">
+    <div class="reveal">
+      <div class="eyebrow">Distribución</div>
+      <h2 class="section-title">Tres niveles, cada uno con su propósito</h2>
+      <p class="section-sub">Azurita C aprovecha la altura: vida social y jardín en planta baja, descanso en planta alta y un roof con recámara, vestidor y estancia.</p>
+    </div>
+
+    <div class="plans-list">
+      <div class="plan-card reveal">
+        <div class="plan-head">
+          <h3>Planta Baja</h3>
+          <span>Nivel 1</span>
+        </div>
+        <figure onclick="openLightbox('images/planta-baja.webp')">
+          <img src="images/planta-baja.webp" alt="Planta baja Azurita C" class="plan-img">
+        </figure>
+        <ul>
+          <li>Sala</li><li>Comedor</li><li>Cocina</li><li>Medio baño</li>
+          <li>Cuarto de lavado</li><li>Jardín</li><li>Cochera</li>
+        </ul>
+      </div>
+
+      <div class="plan-card reveal">
+        <div class="plan-head">
+          <h3>Planta Alta</h3>
+          <span>Nivel 2</span>
+        </div>
+        <figure onclick="openLightbox('images/planta-alta.webp')">
+          <img src="images/planta-alta.webp" alt="Planta alta Azurita C" class="plan-img">
+        </figure>
+        <ul>
+          <li>2 recámaras</li><li>Baño completo</li><li>Clósets</li><li>Pasillo</li>
+        </ul>
+      </div>
+
+      <div class="plan-card reveal">
+        <div class="plan-head">
+          <h3>Roof</h3>
+          <span>Nivel 3</span>
+        </div>
+        <figure onclick="openLightbox('images/planta-roof.webp')">
+          <img src="images/planta-roof.webp" alt="Planta roof Azurita C" class="plan-img">
+        </figure>
+        <ul>
+          <li>Recámara / estancia</li><li>Vestidor</li><li>Baño completo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="btn-agendar-wrap reveal">
+      <p>Conoce esta distribución en persona.</p>
+      <a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20agendar%20una%20cita" class="btn-agendar">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.33C8.53 21.5 10.24 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.51 0-2.93-.4-4.16-1.11l-.3-.17-3.01.79.8-2.94-.19-.31A7.94 7.94 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Agendar cita
+      </a>
+    </div>
+  </section>
+
+  <div class="divider reveal"><i></i><i></i><i></i></div>
+
+  <!-- ===================== GALERÍA ===================== -->
+  <section class="section" style="padding-top:6px;">
+    <div class="reveal">
+      <div class="eyebrow">Galería</div>
+      <h2 class="section-title">Recorre Azurita C por espacio</h2>
+      <p class="section-sub">Explora la sala, cocina, recámaras y baño de esta casa.</p>
+    </div>
+
+    <div class="tabs reveal" id="tabs">
+      <button class="tab active" data-filter="all">Todos</button>
+      <button class="tab" data-filter="pb">Planta Baja</button>
+      <button class="tab" data-filter="pa">Planta Alta</button>
+      <button class="tab" data-filter="roof">Roof</button>
+    </div>
+
+    <!--
+      ══════════════════════════════════════════════════════════
+      CÓMO AGREGAR MÁS FOTOS:
+      Cada .room-block trae data-cat ("pb", "pa" o "roof") para el filtro
+      y agrupa TODAS las fotos de ese mismo cuarto dentro de .room-photos.
+      Nunca mezcles fotos de dos cuartos distintos en un mismo bloque.
+      Si un cuarto no tiene foto todavía, usa el g-card.empty.
+      ══════════════════════════════════════════════════════════
+    -->
+    <div class="gallery-list" id="gallery">
+
+      <!-- 1. Sala -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">1</span><h3>Sala</h3></div>
+        <div class="room-photos">
+          <div class="g-card" onclick="openLightbox('images/sala.jpg')">
+            <img src="images/sala.jpg" alt="Sala Azurita C">
+          </div>
+          <div class="g-card" onclick="openLightbox('images/sala-2.webp')">
+            <img src="images/sala-2.webp" alt="Sala Azurita C, otro ángulo">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Comedor -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">2</span><h3>Comedor</h3></div>
+        <div class="room-photos">
+          <div class="g-card" onclick="openLightbox('images/sala-comedor.jpg')">
+            <img src="images/sala-comedor.jpg" alt="Comedor Azurita C">
+          </div>
+          <div class="g-card" onclick="openLightbox('images/comedor-2.webp')">
+            <img src="images/comedor-2.webp" alt="Comedor Azurita C, otro ángulo">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Cocina -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">3</span><h3>Cocina</h3></div>
+        <div class="room-photos">
+          <div class="g-card" onclick="openLightbox('images/cocina-1.jpg')">
+            <img src="images/cocina-1.jpg" alt="Cocina Azurita C">
+          </div>
+          <div class="g-card" onclick="openLightbox('images/cocina-2.jpg')">
+            <img src="images/cocina-2.jpg" alt="Cocina Azurita C, otro ángulo">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Medio baño -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">4</span><h3>Medio baño</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+      <!-- 5. Cuarto de lavado -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">5</span><h3>Cuarto de lavado</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+      <!-- 6. Jardín -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">6</span><h3>Jardín</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+      <!-- Extra PB: Escalera -->
+      <div class="room-block reveal" data-cat="pb">
+        <div class="room-head"><span class="room-num">+</span><h3>Escalera</h3></div>
+        <div class="room-photos">
+          <div class="g-card wide" onclick="openLightbox('images/escalera.jpg')">
+            <img src="images/escalera.jpg" alt="Escalera Azurita C">
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Recámara 1 -->
+      <div class="room-block reveal" data-cat="pa">
+        <div class="room-head"><span class="room-num">7</span><h3>Recámara 1</h3></div>
+        <div class="room-photos">
+          <div class="g-card" onclick="openLightbox('images/recamara-1.jpg')">
+            <img src="images/recamara-1.jpg" alt="Recámara 1 Azurita C">
+          </div>
+          <div class="g-card" onclick="openLightbox('images/recamara-1b.webp')">
+            <img src="images/recamara-1b.webp" alt="Recámara 1 Azurita C, otro ángulo">
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Recámara 2 -->
+      <div class="room-block reveal" data-cat="pa">
+        <div class="room-head"><span class="room-num">8</span><h3>Recámara 2</h3></div>
+        <div class="room-photos">
+          <div class="g-card" onclick="openLightbox('images/recamara-2.jpg')">
+            <img src="images/recamara-2.jpg" alt="Recámara 2 Azurita C">
+          </div>
+          <div class="g-card" onclick="openLightbox('images/recamara-2b.webp')">
+            <img src="images/recamara-2b.webp" alt="Recámara 2 Azurita C, otro ángulo">
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Baño completo -->
+      <div class="room-block reveal" data-cat="pa">
+        <div class="room-head"><span class="room-num">9</span><h3>Baño completo</h3></div>
+        <div class="room-photos">
+          <div class="g-card wide" onclick="openLightbox('images/bano.jpg')">
+            <img src="images/bano.jpg" alt="Baño completo Azurita C" style="object-position:top center;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra PA: Pasillo -->
+      <div class="room-block reveal" data-cat="pa">
+        <div class="room-head"><span class="room-num">+</span><h3>Pasillo</h3></div>
+        <div class="room-photos">
+          <div class="g-card wide" onclick="openLightbox('images/pasillo.jpg')">
+            <img src="images/pasillo.jpg" alt="Pasillo planta alta Azurita C">
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Recámara / estancia (roof) -->
+      <div class="room-block reveal" data-cat="roof">
+        <div class="room-head"><span class="room-num">10</span><h3>Recámara / estancia del roof</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+      <!-- 11. Vestidor (roof) -->
+      <div class="room-block reveal" data-cat="roof">
+        <div class="room-head"><span class="room-num">11</span><h3>Vestidor</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+      <!-- 12. Baño del roof -->
+      <div class="room-block reveal" data-cat="roof">
+        <div class="room-head"><span class="room-num">12</span><h3>Baño del roof</h3></div>
+        <div class="room-photos">
+          <div class="g-card empty"><span class="soon">Próximamente fotos disponibles</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-agendar-wrap reveal">
+      <p>¿Ya recorriste toda la galería? Es momento de verla en persona.</p>
+      <a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20agendar%20una%20cita" class="btn-agendar">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.33C8.53 21.5 10.24 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.51 0-2.93-.4-4.16-1.11l-.3-.17-3.01.79.8-2.94-.19-.31A7.94 7.94 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Agendar cita
+      </a>
+    </div>
+  </section>
+
+  <div class="divider reveal"><i></i><i></i><i></i></div>
+
+  <!-- ===================== UBICACIÓN ===================== -->
+  <section class="section" style="padding-top:6px;">
+    <div class="reveal">
+      <div class="eyebrow">Ubicación</div>
+      <h2 class="section-title">Encuentra Privada Lanka</h2>
+      <p class="section-sub">Consulta el mapa para ver la ubicación exacta de Azurita C dentro de Privada Lanka.</p>
+    </div>
+    <div class="map-card reveal" onclick="openLightbox('images/privada-aerea.webp')" style="cursor:zoom-in;">
+      <img src="images/privada-aerea.webp" alt="Vista aérea de Privada Lanka con alberca y casa club" style="width:100%; display:block;">
+    </div>
+    <div class="map-card reveal">
+      <iframe src="https://www.google.com/maps/d/embed?mid=1zSt2w8aimdne6IA4S9ignCg5iWanmOg" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="map-btn" href="https://www.google.com/maps/d/edit?mid=1zSt2w8aimdne6IA4S9ignCg5iWanmOg&usp=sharing" target="_blank" rel="noopener">
+        <span>&#9679;</span> Ver ubicación en Google Maps
+      </a>
+    </div>
+    <div class="btn-agendar-wrap reveal">
+      <p>Ya sabes dónde está. Agenda tu cita y conócela por dentro.</p>
+      <a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20agendar%20una%20cita" class="btn-agendar">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.33C8.53 21.5 10.24 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.51 0-2.93-.4-4.16-1.11l-.3-.17-3.01.79.8-2.94-.19-.31A7.94 7.94 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Agendar cita
+      </a>
+    </div>
+  </section>
+
+  <div class="divider reveal"><i></i><i></i><i></i></div>
+
+  <!-- ===================== FINANCIAMIENTO ===================== -->
+  <section class="section" style="padding-top:6px;">
+    <div class="reveal">
+      <div class="eyebrow">Financiamiento</div>
+      <h2 class="section-title">Aceptamos todo tipo de crédito</h2>
+    </div>
+    <div class="fin-card reveal">
+      <p>Trabajamos con Infonavit, Cofinavit, Fovissste, Unamos, crédito BBVA y créditos bancarios tradicionales para que tu casa en Privada Lanka sea tuya de la forma más conveniente.</p>
+      <div class="fin-badges">
+        <span>Infonavit</span>
+        <span>Cofinavit</span>
+        <span>Fovissste</span>
+        <span>Unamos</span>
+        <span>Crédito BBVA</span>
+        <span>Crédito bancario</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <h2>¿Listo para conocer Azurita C en persona?</h2>
+    <p>Agenda tu visita y recorre cada espacio de esta casa diseñada para tu estilo de vida.</p>
+    <a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20conocerlo" class="cta-btn">Agendar visita</a>
+    <div class="footer-logo">
+      <a style="display:inline-block; line-height:0;" href="https://castdim.mx" target="_blank" rel="noopener">
+        <img src="images/logo-castdim.png" alt="CASTDIM">
+      </a>
+      <div class="footer-tag">Sueños Hechos Propiedad</div>
+    </div>
+  </section>
+</div>
+
+<a href="https://wa.me/524444116075?text=Hola%20mire%20Azurita%20C%20en%20tu%20pagina%20y%20me%20gustaria%20agendar%20una%20cita" class="wa-float" id="waFloat" aria-label="Agendar cita por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.33C8.53 21.5 10.24 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm4.51 14.35c-.2.55-1.15 1.06-1.6 1.1-.43.04-.83.2-2.79-.58-2.36-.93-3.87-3.33-3.99-3.49-.11-.16-.95-1.27-.95-2.42s.6-1.71.82-1.95c.2-.22.45-.28.6-.28l.44.01c.14.01.33-.05.51.39.2.46.65 1.6.71 1.71.06.12.1.26.02.42-.08.16-.12.26-.24.4l-.36.42c-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.18.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.18.46.28.06.1.06.58-.14 1.01z"/></svg>
+</a>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span>&times;</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const dividers = document.querySelectorAll('.divider');
+  const dio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); dio.unobserve(e.target); }
+    });
+  }, {threshold:.4});
+  dividers.forEach(el=>dio.observe(el));
+
+  const tabs = document.querySelectorAll('.tab');
+  const blocks = document.querySelectorAll('.room-block');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const f = tab.dataset.filter;
+      blocks.forEach(b=>{
+        b.style.display = (f==='all' || b.dataset.cat===f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Si una imagen de planta aún no existe, se muestra "Próximamente"
+  document.querySelectorAll('.plan-img').forEach(img=>{
+    function showSoon(){
+      const fig = img.closest('figure');
+      fig.onclick = null;
+      fig.style.cursor = 'default';
+      fig.innerHTML = '<div class="plan-soon">Próximamente</div>';
+    }
+    if(img.complete && img.naturalWidth === 0){ showSoon(); }
+    else{ img.addEventListener('error', showSoon); }
+  });
+
+  function openLightbox(src){
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('show');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('show');
+  }
+
+  // Contadores animados (se disparan al entrar en pantalla)
+  function animateCount(el){
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || 0);
+    const money = el.dataset.format === 'money';
+    const dur = 1600;
+    const t0 = performance.now();
+    function frame(now){
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = money
+        ? Math.round(val).toLocaleString('en-US')
+        : val.toFixed(decimals);
+      if(p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const cio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); }
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+
+  // Parallax del hero + barra de progreso + WhatsApp flotante
+  const heroParallax = document.getElementById('heroParallax');
+  const heroEl = document.getElementById('hero');
+  const progress = document.getElementById('scrollProgress');
+  const waFloat = document.getElementById('waFloat');
+  let ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(()=>{
+      const y = window.scrollY;
+      const heroH = heroEl.offsetHeight;
+      if(y < heroH){
+        heroParallax.style.transform = 'translateY(' + (y * .28) + 'px)';
+      }
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      waFloat.classList.toggle('show', y > heroH * .7);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+</script>
+</body>
+</html>
